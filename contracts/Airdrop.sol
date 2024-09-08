@@ -66,6 +66,12 @@ contract MerkleAirdrop {
         IERC20(tokenAddress).transfer(_to, _bal);
     }
 
+    function updateMerkleRoot(bytes32 _merkleRoot) external {
+        onlyOwner();
+
+        merkleRoot = _merkleRoot;
+    }
+
     function onlyOwner() private view {
         if(msg.sender != owner) {
             revert NotOwner();
