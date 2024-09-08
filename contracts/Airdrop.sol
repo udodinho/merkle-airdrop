@@ -11,6 +11,7 @@ contract MerkleAirdrop {
     error AirdropEnded();
     error ClaimedAirdrop();
     error InvalidProof();
+    error InsufficientBalance();
 
     address owner;
     bytes32 public merkleRoot;
@@ -53,10 +54,16 @@ contract MerkleAirdrop {
         }
     }
 
-    function ownerWithdraw(uint256 _amount) external {
+    function ownerWithdraw(address _to) external {
         onlyOwner();
 
-        IERC20(tokenAddress).transfer(owner, _amount);
+        uint256 _bal = IERC20(tokenAddress).balanceOf(address(this));
+
+        if (_bal == 0) {
+            revert InsufficientBalance();            
+        }
+
+        IERC20(tokenAddress).transfer(_to, _bal);
     }
 
     function onlyOwner() private view {
