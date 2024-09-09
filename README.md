@@ -6,8 +6,8 @@ This project is a smart contract that implements a Merkle Airdrop using Solidity
 
 Before you begin, ensure you have met the following requirements:
 
-- Node.js: You should have Node.js installed. [Download Node.js]{https://nodejs.org}
-- Hardhat: Hardhat is a development environment for Ethereum. Install it using npm [Hardhat]{https://hardhat.org}.
+- Node.js: You should have Node.js installed. [Download Node.js](https://nodejs.org)
+- Hardhat: Hardhat is a development environment for Ethereum. Install it using npm [Hardhat](https://hardhat.org).
 
 ### Installation
 
