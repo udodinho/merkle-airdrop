@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: SEE LICENSE IN LICENSE
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -13,7 +13,7 @@ contract MerkleAirdrop {
     error InvalidProof();
     error InsufficientBalance();
 
-    address owner;
+    address public owner;
     bytes32 public merkleRoot;
     address immutable tokenAddress;
 
