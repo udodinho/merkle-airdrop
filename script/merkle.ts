@@ -5,7 +5,6 @@ import { MerkleTree } from "merkletreejs";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-// Define the interface for the CSV row
 interface CsvRow {
     address: string;
     amount: string;
@@ -13,23 +12,23 @@ interface CsvRow {
 
 async function generateMerkleTree(filePath: string): Promise<void> {
     const entries: Buffer[] = [];
+    let leaf: string | Buffer;
 
-    // Read the CSV file
     fs.createReadStream(filePath)
         .pipe(csv())
         .on("data", (row: CsvRow) => {
             const { address, amount } = row;
-            const leaf = keccak256(Buffer.from(`${address},${amount}`)); // Hash the address and amount
+            leaf = keccak256(Buffer.from(`${address},${amount}`));
             entries.push(leaf);
         })
         .on("end", () => {
-            // Generate the Merkle tree and root
             const merkleTree = new MerkleTree(entries, keccak256, { sortPairs: true });
             const merkleRoot = merkleTree.getHexRoot();
+            const merkleleaf = merkleTree.getHexProof(leaf)
 
             console.log("Merkle Root:", merkleRoot);
+            console.log("Merkleleaf: ", merkleleaf)
 
-            // Optionally, output the tree and leaves for verification
             console.log("Merkle Tree:", merkleTree.toString());
         });
 }
